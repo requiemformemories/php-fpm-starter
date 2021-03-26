@@ -6,9 +6,15 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./site.conf:/etc/nginx/conf.d/default.conf
       - ./app:/app
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+      - ./php_sockets:/var/run/php
   php:
     image: php:8-fpm
     volumes:
       - ./app:/app
+      - ./zz-docker.conf:/usr/local/etc/php-fpm.d/zz-docker.conf
+      - ./php_sockets:/var/run/php
+
+volumes:
+  php_sockets:
